@@ -1,11 +1,12 @@
 import { DataSourceOptions } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
+import { SeederOptions } from 'typeorm-extension';
 
 require('dotenv').config();
 
 export const dataSourceOptions = (
   configService: ConfigService,
-): DataSourceOptions => ({
+): DataSourceOptions & SeederOptions => ({
   type: 'postgres',
   host: configService.get<string>('DB_HOST'),
   port: configService.get<number>('DB_PORT'),
@@ -16,8 +17,8 @@ export const dataSourceOptions = (
   synchronize: false,
   migrationsTableName: 'migrations',
   migrations: ['dist/src/infrastructure/database/migrations/*.js'],
-  //   seedTableName: 'seeds',
-  //   seedName: 'seeder',
-  //   seeds: ['dist/src/infrastructure/database/seeders/*.js'],
-  //   seedTracking: true,
+  seedTableName: 'seeds',
+  seedName: 'seeder',
+  seeds: ['dist/src/infrastructure/database/seeders/*.js'],
+  seedTracking: true,
 });
