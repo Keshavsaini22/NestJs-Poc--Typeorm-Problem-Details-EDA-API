@@ -2,9 +2,11 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from 'src/infrastructure/repositories/user/user.repository';
 import { RegisterUserCommand } from './register-user.command';
+import { UserEmailAlreadyExistsConflict } from 'src/domain/user/exceptions/exceptions';
 
 @CommandHandler(RegisterUserCommand)
-export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand>
+export class RegisterUserHandler
+  implements ICommandHandler<RegisterUserCommand>
 {
   constructor(
     @InjectRepository(UserRepository)
@@ -12,8 +14,10 @@ export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand>
   ) {}
 
   async execute(command: RegisterUserCommand) {
-    const user = await this.repository.saveUser(command);
-    console.log('user: ', user);
-    return user;
+    const user = await this.repository.findByEmail(command.email);
+
+    if (user) throw new UserEmailAlreadyExistsConflict();
+
+    return await this.repository.saveUser(command);
   }
 }

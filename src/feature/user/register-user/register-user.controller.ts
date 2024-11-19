@@ -11,10 +11,8 @@ export class RegisterUserController {
   async registerUser(@Body() registerUserDto: RegisterUserDto) {
     const { name, email, address, role } = registerUserDto;
 
-    console.log("yoyo")
     const command = new RegisterUserCommand(name, email, address, role);
 
-    console.log("yoyo1")
     return this.commandBus.execute(command);
   }
 }

@@ -9,6 +9,10 @@ export class UserRepository extends Repository<User> {
     super(User, dataSource.createEntityManager());
   }
 
+  async findByEmail(email: string): Promise<User> {
+    return await this.findOne({ where: { email } });
+  }
+
   async saveUser(payload: UserType): Promise<User> {
     return await this.save(payload);
   }
