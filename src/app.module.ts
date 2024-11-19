@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'ormconfig';
 import { RegisterUserModule } from './feature/user/register-user/register-user.module';
+import { ListUsersModule } from './feature/user/list-users/list-users.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RegisterUserModule } from './feature/user/register-user/register-user.m
       inject: [ConfigService],
     }),
     RegisterUserModule,
+    ListUsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

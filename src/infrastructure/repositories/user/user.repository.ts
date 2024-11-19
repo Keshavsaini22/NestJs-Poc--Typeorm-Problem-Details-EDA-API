@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/domain/user/user.entity';
-import { RegisterUserCommand } from 'src/feature/user/register-user/register-user.command';
 import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
@@ -13,7 +12,19 @@ export class UserRepository extends Repository<User> {
     return await this.findOne({ where: { email } });
   }
 
-  async saveUser(payload: UserType): Promise<User> {
+  async saveUser(payload: UserPayload): Promise<User> {
     return await this.save(payload);
+  }
+
+  async search(payload: ListUserPayload): Promise<ListUserResponse> {
+    const { page = 1, limit = 10 } = payload;
+    const offset = limit * (page - 1);
+    let queryBuilder = this.createQueryBuilder();
+    const [data, total] = await queryBuilder
+      .offset(offset)
+      .limit(limit)
+      .orderBy('created_at', 'DESC')
+      .getManyAndCount();
+    return { data, total, current_page: page, per_page: limit };
   }
 }
