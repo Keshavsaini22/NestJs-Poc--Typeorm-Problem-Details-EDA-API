@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateMessages1731927296663 implements MigrationInterface {
-  name = 'CreateMessages1731927296663';
+export class CreatePatient1732166760682 implements MigrationInterface {
+  name = 'CreatePatient1732166760682';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'messages',
+        name: 'patients',
         columns: [
           {
             name: 'uuid',
@@ -14,21 +14,36 @@ export class CreateMessages1731927296663 implements MigrationInterface {
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'uuid',
+            isNullable: false,
           },
           {
-            name: 'title',
+            name: 'name',
             type: 'varchar',
             length: '100',
             isNullable: false,
           },
           {
-            name: 'content',
+            name: 'email',
             type: 'varchar',
+            length: '100',
+            isNullable: false,
+            isUnique: true,
+          },
+          {
+            name: 'address',
+            type: 'varchar',
+            length: '250',
+            isNullable: true,
+          },
+          {
+            name: 'insurance',
+            type: 'boolean',
+            default: 'false',
             isNullable: false,
           },
           {
-            name: 'conversation',
-            type: 'uuid',
+            name: 'date_checkout',
+            type: 'date',
             isNullable: false,
           },
           {
@@ -49,20 +64,21 @@ export class CreateMessages1731927296663 implements MigrationInterface {
             isNullable: true,
           },
         ],
-        foreignKeys: [
-          {
-            columnNames: ['conversation'],
-            referencedTableName: 'conversations',
-            referencedColumnNames: ['uuid'],
-            // onDelete: 'CASCADE',
-            // onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
-  }
 
+    // Add a unique partial index on email and deleted_at
+    // await queryRunner.query(`
+    //     CREATE UNIQUE INDEX "UQ_patients_email_not_deleted"
+    //     ON "patients" ("email")
+    //     WHERE "deleted_at" IS NULL
+    //   `);
+  }
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('messages');
+    // await queryRunner.query(`
+    //     DROP INDEX "UQ_patients_email_not_deleted"
+    //   `);
+
+    await queryRunner.dropTable('patients');
   }
 }

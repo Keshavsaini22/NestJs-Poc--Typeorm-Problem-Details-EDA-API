@@ -21,8 +21,8 @@
     "typeorm": "npx typeorm -d dist/src/infrastructure/database/data-source.js",
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:create": "typeorm migration:create",
-    "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm  -- migration:revert",
+    "up": "npm run typeorm -- migration:run",
+    "down": "npm run typeorm  -- migration:revert",
     "seed:run": "npm run build && node dist/src/infrastructure/database/scripts/seed.js"
   },
   "dependencies": {

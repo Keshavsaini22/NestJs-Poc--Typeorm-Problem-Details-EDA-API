@@ -3,11 +3,9 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
-import { Participant } from '../participant/participant.entity';
 import { Roles } from './enums/roles.enum';
 
 @Entity('users')
@@ -30,9 +28,6 @@ export class User {
     default: Roles.USER,
   })
   role: string;
-
-  @OneToMany(() => Participant, (participant) => participant.user)
-  participants: Participant[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   created_at: Date;
