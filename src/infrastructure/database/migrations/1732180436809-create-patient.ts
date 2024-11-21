@@ -1,7 +1,12 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class CreatePatient1732166760682 implements MigrationInterface {
-  name = 'CreatePatient1732166760682';
+export class CreatePatient1732180436809 implements MigrationInterface {
+  name = 'CreatePatient1732180436809';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -14,7 +19,6 @@ export class CreatePatient1732166760682 implements MigrationInterface {
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'uuid',
-            isNullable: false,
           },
           {
             name: 'name',
@@ -27,7 +31,6 @@ export class CreatePatient1732166760682 implements MigrationInterface {
             type: 'varchar',
             length: '100',
             isNullable: false,
-            isUnique: true,
           },
           {
             name: 'address',
@@ -38,25 +41,27 @@ export class CreatePatient1732166760682 implements MigrationInterface {
           {
             name: 'insurance',
             type: 'boolean',
-            default: 'false',
-            isNullable: false,
+            default: false,
           },
           {
             name: 'date_checkout',
             type: 'date',
+          },
+          {
+            name: 'doctor_uuid',
+            type: 'uuid',
             isNullable: false,
           },
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
-            isNullable: false,
+            default: 'CURRENT_TIMESTAMP',
           },
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: 'now()',
-            isNullable: false,
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
           },
           {
             name: 'deleted_at',
@@ -67,17 +72,25 @@ export class CreatePatient1732166760682 implements MigrationInterface {
       }),
     );
 
-    // Add a unique partial index on email and deleted_at
-    // await queryRunner.query(`
-    //     CREATE UNIQUE INDEX "UQ_patients_email_not_deleted"
-    //     ON "patients" ("email")
-    //     WHERE "deleted_at" IS NULL
-    //   `);
+    await queryRunner.createForeignKey(
+      'patients',
+      new TableForeignKey({
+        columnNames: ['doctor_uuid'],
+        referencedColumnNames: ['uuid'],
+        referencedTableName: 'doctors',
+        onDelete: 'CASCADE',
+      }),
+    );
   }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // await queryRunner.query(`
-    //     DROP INDEX "UQ_patients_email_not_deleted"
-    //   `);
+    const table = await queryRunner.getTable('patients');
+    const foreignKey = table.foreignKeys.find((fk) =>
+      fk.columnNames.includes('doctor_uuid'),
+    );
+    if (foreignKey) {
+      await queryRunner.dropForeignKey('patients', foreignKey);
+    }
 
     await queryRunner.dropTable('patients');
   }

@@ -5,31 +5,26 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
+import { Patient } from '../patient/patient.entity';
 import { Doctor } from '../doctor/doctor.entity';
 
-@Entity('patients')
-export class Patient {
+@Entity('tests')
+export class Test {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
-  email: string;
+  @Column({ type: 'boolean', nullable: false })
+  result: boolean;
 
-  @Column({ type: 'varchar', length: 250 })
-  address: string;
+  @ManyToOne(() => Patient, { onDelete: 'CASCADE', nullable: false })
+  patient: Patient;
 
-  @Column({ type: 'boolean', default: false })
-  insurance: boolean;
-
-  @Column({ type: 'date' })
-  date_checkout: Date;
-
-  @ManyToOne(() => Doctor, (doctor) => doctor.patients, { nullable: false })
+  @ManyToOne(() => Doctor, { onDelete: 'CASCADE', nullable: false })
   doctor: Doctor;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
