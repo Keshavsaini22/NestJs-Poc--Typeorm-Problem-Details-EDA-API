@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'ormconfig';
 import { RegisterUserModule } from './feature/user/register-user/register-user.module';
 import { ListUsersModule } from './feature/user/list-users/list-users.module';
+import { DoctorModule } from './feature/doctor/doctor.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ListUsersModule } from './feature/user/list-users/list-users.module';
     }),
     RegisterUserModule,
     ListUsersModule,
+    DoctorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
