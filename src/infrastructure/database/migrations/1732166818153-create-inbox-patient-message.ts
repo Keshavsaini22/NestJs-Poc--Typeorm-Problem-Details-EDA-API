@@ -5,7 +5,7 @@ export class CreateInboxMessage1732166818153 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-                CREATE TABLE "inbox_message" (
+                CREATE TABLE "inbox_message_patient" (
                     "id" SERIAL NOT NULL,
                     "message_id" uuid NOT NULL,
                     "handler_name" character varying NOT NULL,
@@ -17,6 +17,6 @@ export class CreateInboxMessage1732166818153 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE "inbox_message"`);
+    await queryRunner.query(`DROP TABLE "inbox_message_patient"`);
   }
 }

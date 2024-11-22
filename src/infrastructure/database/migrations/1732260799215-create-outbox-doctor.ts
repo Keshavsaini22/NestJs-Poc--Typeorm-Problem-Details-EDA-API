@@ -1,16 +1,16 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateOutboxMessage1732166840790 implements MigrationInterface {
-  name = 'CreateOutboxMessage1732166840790';
+export class CreateOutboxDoctor1732260799215 implements MigrationInterface {
+  name = 'CreateOutboxDoctor1732260799215';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TYPE "public"."outbox_message_status_enum" AS ENUM('sent', 'pending')`,
+      `CREATE TYPE "public"."outbox_doctor_message_status_enum" AS ENUM('sent', 'pending')`,
     );
 
     await queryRunner.createTable(
       new Table({
-        name: 'outbox_message',
+        name: 'outbox_message_doctor',
         columns: [
           {
             name: 'id',
@@ -46,7 +46,7 @@ export class CreateOutboxMessage1732166840790 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: `"public"."outbox_message_status_enum"`,
+            type: `"public"."outbox_doctor_message_status_enum"`,
             default: `'pending'`,
             isNullable: false,
           },
@@ -61,7 +61,7 @@ export class CreateOutboxMessage1732166840790 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('outbox_message');
-    await queryRunner.query(`DROP TYPE "public"."outbox_message_status_enum"`);
+    await queryRunner.dropTable('outbox_message_doctor');
+    await queryRunner.query(`DROP TYPE "public"."outbox_doctor_message_status_enum"`);
   }
 }

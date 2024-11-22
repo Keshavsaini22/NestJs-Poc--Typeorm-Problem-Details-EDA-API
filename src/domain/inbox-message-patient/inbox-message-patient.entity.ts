@@ -7,9 +7,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('inbox_message')
+@Entity('inbox_message_patient')
 @Unique('unique_message_handler', ['message_id', 'handler_name'])
-export class InboxMessage {
+export class InboxMessagePatient {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
