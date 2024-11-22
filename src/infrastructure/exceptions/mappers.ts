@@ -1,11 +1,11 @@
 import { BadRequestException, HttpStatus } from '@nestjs/common';
 import {
-    ProblemDocument,
-    ProblemDocumentExtension,
+  ProblemDocument,
+  ProblemDocumentExtension,
 } from 'http-problem-details';
 import { ErrorMapper } from 'http-problem-details-mapper';
 import { UserEmailAlreadyExistsConflict } from 'src/domain/user/exceptions/exceptions';
-import { DtoValidation } from './exceptions';
+import { DtoValidation, NotFound } from './exceptions';
 
 class ConflictMapper {
   static mapError(error: Error): ProblemDocument {
@@ -17,6 +17,16 @@ class ConflictMapper {
   }
 }
 
+class NotFoundMapper {
+  static mapError(error: Error): ProblemDocument {
+    return new ProblemDocument({
+      title: 'Not Found',
+      detail: error.message,
+      status: HttpStatus.NOT_FOUND,
+    });
+  }
+}
+
 export class UserEmailAlreadyExistsConflictMapper extends ErrorMapper {
   constructor() {
     super(UserEmailAlreadyExistsConflict);
@@ -24,6 +34,17 @@ export class UserEmailAlreadyExistsConflictMapper extends ErrorMapper {
 
   mapError(error: Error): ProblemDocument {
     return ConflictMapper.mapError(error);
+  }
+}
+
+//NOT FOUND
+export class NotFoundExceptionMapper extends ErrorMapper {
+  constructor() {
+    super(NotFound);
+  }
+
+  mapError(error: Error): ProblemDocument {
+    return NotFoundMapper.mapError(error);
   }
 }
 

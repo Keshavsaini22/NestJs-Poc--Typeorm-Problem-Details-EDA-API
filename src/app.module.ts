@@ -7,6 +7,7 @@ import { dataSourceOptions } from 'ormconfig';
 import { RegisterUserModule } from './feature/user/register-user/register-user.module';
 import { ListUsersModule } from './feature/user/list-users/list-users.module';
 import { DoctorModule } from './feature/doctor/doctor.module';
+import { PatientModule } from './feature/patient/patient.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DoctorModule } from './feature/doctor/doctor.module';
     RegisterUserModule,
     ListUsersModule,
     DoctorModule,
+    PatientModule,
   ],
   controllers: [AppController],
   providers: [AppService],

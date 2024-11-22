@@ -46,6 +46,7 @@ export class CreatePatient1732180436809 implements MigrationInterface {
           {
             name: 'date_checkout',
             type: 'date',
+            isNullable: true,
           },
           {
             name: 'doctor_uuid',

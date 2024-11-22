@@ -3,9 +3,10 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 import { Doctor } from '../doctor/doctor.entity';
 
@@ -30,6 +31,7 @@ export class Patient {
   date_checkout: Date;
 
   @ManyToOne(() => Doctor, (doctor) => doctor.patients, { nullable: false })
+  @JoinColumn({ name: 'doctor_uuid' })
   doctor: Doctor;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
