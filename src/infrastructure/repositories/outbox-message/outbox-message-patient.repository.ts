@@ -5,7 +5,7 @@ import { OutboxMessagePatient } from 'src/domain/outbox-message-patient/outbox-m
 import { DataSource, EntityManager, Repository } from 'typeorm';
 
 @Injectable()
-export class OutboxMessageDoctorRepository extends Repository<OutboxMessagePatient> {
+export class OutboxMessagePatientRepository extends Repository<OutboxMessagePatient> {
   constructor(dataSource: DataSource) {
     super(OutboxMessagePatient, dataSource.createEntityManager());
   }

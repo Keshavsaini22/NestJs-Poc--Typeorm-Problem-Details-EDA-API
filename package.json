@@ -23,7 +23,10 @@
     "migration:create": "typeorm migration:create",
     "up": "npm run typeorm -- migration:run",
     "down": "npm run typeorm  -- migration:revert",
-    "seed:run": "npm run build && node dist/src/infrastructure/database/scripts/seed.js"
+    "seed:run": "npm run build && node dist/src/infrastructure/database/scripts/seed.js",
+    "dispatch-messages-patient": "npm run build && node dist/src/rabbitmq/patient-message-bus/cli-commands/command-handler dispatch-messages",
+    "handle-messages-doctor": "npm run build && node dist/src/rabbitmq/doctor-message-bus/cli-commands/command-handler handle-messages"
+
   },
   "dependencies": {
     "@nestjs/common": "^10.4.8",

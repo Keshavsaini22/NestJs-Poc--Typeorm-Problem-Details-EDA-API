@@ -55,6 +55,17 @@ export class CreateOutboxDoctor1732260799215 implements MigrationInterface {
             type: 'timestamp',
             isNullable: true,
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'CURRENT_TIMESTAMP',
+            onUpdate: 'CURRENT_TIMESTAMP',
+          },
         ],
       }),
     );
@@ -62,6 +73,8 @@ export class CreateOutboxDoctor1732260799215 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('outbox_message_doctor');
-    await queryRunner.query(`DROP TYPE "public"."outbox_doctor_message_status_enum"`);
+    await queryRunner.query(
+      `DROP TYPE "public"."outbox_doctor_message_status_enum"`,
+    );
   }
 }
