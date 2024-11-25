@@ -10,6 +10,12 @@ import { OutboxMessagePatient } from 'src/domain/outbox-message-patient/outbox-m
 import { ProducerService } from './rabbitmq/workers/producer.service';
 import { OutboxMessageRelay } from './outbox-message-relay.service';
 import { DispatchMessages } from './cli-commands/dispatch-messages';
+import { InboxMessageHandler } from './inbox-message-handler.service';
+import { HandleMessages } from './cli-commands/handle-messages';
+import { ConsumerService } from './rabbitmq/workers/consumer.service';
+import { SignatureTypesPatient } from './processors/signature-types.service';
+import { InboxMessagePatientRepository } from 'src/infrastructure/repositories/inbox-message/inbox-message-patient.repository';
+import { TestCreatedInfoProcessor } from './processors/test-created-info/test-created-info';
 
 @Module({
   imports: [
@@ -29,7 +35,13 @@ import { DispatchMessages } from './cli-commands/dispatch-messages';
     OutboxMessagePatientRepository,
     OutboxMessagePatient,
     ProducerService,
-    OutboxMessageRelay
+    OutboxMessageRelay,
+    InboxMessageHandler,
+    HandleMessages,
+    ConsumerService,
+    SignatureTypesPatient,
+    InboxMessagePatientRepository,
+    TestCreatedInfoProcessor
   ],
 })
 export class RabbitmqModule {}

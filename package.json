@@ -25,6 +25,7 @@
     "down": "npm run typeorm  -- migration:revert",
     "seed:run": "npm run build && node dist/src/infrastructure/database/scripts/seed.js",
     "dispatch-messages-patient": "npm run build && node dist/src/rabbitmq/patient-message-bus/cli-commands/command-handler dispatch-messages",
+    "handle-messages-patient": "npm run build && node dist/src/rabbitmq/patient-message-bus/cli-commands/command-handler handle-messages",
     "handle-messages-doctor": "npm run build && node dist/src/rabbitmq/doctor-message-bus/cli-commands/command-handler handle-messages",
     "dispatch-messages-doctor": "npm run build && node dist/src/rabbitmq/doctor-message-bus/cli-commands/command-handler dispatch-messages",
     "handle-messages-test": "npm run build && node dist/src/rabbitmq/test-message-bus/cli-commands/command-handler handle-messages",

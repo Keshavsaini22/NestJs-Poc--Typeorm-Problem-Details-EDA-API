@@ -16,6 +16,7 @@ import { DispatchMessages } from './cli-commands/dispatch-messages';
 import { OutboxMessageRelay } from './outbox-message-relay.service';
 import { ProducerService } from './rabbitmq/workers/producer.service';
 import { OutboxMessageDoctor } from 'src/domain/outbox-message-doctor/outbox-message-doctor.entity';
+import { TestCreatedInfoProcessor } from './processors/test-created-info/test-created-info';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { OutboxMessageDoctor } from 'src/domain/outbox-message-doctor/outbox-mes
     DispatchMessages,
     OutboxMessageRelay,
     ProducerService,
-    OutboxMessageDoctor
+    OutboxMessageDoctor,
+    TestCreatedInfoProcessor
   ],
 })
 export class RabbitmqModule {}
