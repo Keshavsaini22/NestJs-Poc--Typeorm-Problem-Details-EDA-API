@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 import { OutBoxStatus } from './enums/status.enum';
 
-@Entity('outbox_message_doctor')
-export class OutboxMessageDoctor {
+@Entity('outbox_message_test')
+export class OutboxMessageTest {
   @PrimaryGeneratedColumn('increment')
   id: number;
 

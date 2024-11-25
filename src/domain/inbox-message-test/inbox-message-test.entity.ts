@@ -9,7 +9,7 @@ import {
 
 @Entity('inbox_message_test')
 @Unique('unique_message_handler', ['message_id', 'handler_name'])
-export class InboxMessageDoctor {
+export class InboxMessageTest {
   @PrimaryGeneratedColumn('increment')
   id: number;
 

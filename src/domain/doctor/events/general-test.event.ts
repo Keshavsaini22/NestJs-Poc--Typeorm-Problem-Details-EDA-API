@@ -1,9 +1,9 @@
 import { Event } from 'src/domain/common/event';
 
-export class CreatePatientEvent extends Event {
+export class GeneralTestEvent extends Event {
   constructor(payload) {
     super(payload);
-    this.type = 'hospital.patient.create-patient';
+    this.type = 'hospital.doctor.general-test';
   }
   getBody() {
     return {
