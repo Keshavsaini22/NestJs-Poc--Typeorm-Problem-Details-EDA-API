@@ -32,12 +32,12 @@ export class CreateTest1732189650906 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'patient_id',
+            name: 'patient_uuid',
             type: 'uuid',
             isNullable: false,
           },
           {
-            name: 'doctor_id',
+            name: 'doctor_uuid',
             type: 'uuid',
             isNullable: false,
           },
@@ -64,7 +64,7 @@ export class CreateTest1732189650906 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'tests',
       new TableForeignKey({
-        columnNames: ['patient_id'],
+        columnNames: ['patient_uuid'],
         referencedColumnNames: ['uuid'],
         referencedTableName: 'patients',
         onDelete: 'CASCADE',
@@ -74,7 +74,7 @@ export class CreateTest1732189650906 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'tests',
       new TableForeignKey({
-        columnNames: ['doctor_id'],
+        columnNames: ['doctor_uuid'],
         referencedColumnNames: ['uuid'],
         referencedTableName: 'doctors',
         onDelete: 'CASCADE',

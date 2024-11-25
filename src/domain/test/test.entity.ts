@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -22,9 +23,11 @@ export class Test {
   result: boolean;
 
   @ManyToOne(() => Patient, { onDelete: 'CASCADE', nullable: false })
+  @JoinColumn({ name: 'patient_uuid' })
   patient: Patient;
 
   @ManyToOne(() => Doctor, { onDelete: 'CASCADE', nullable: false })
+  @JoinColumn({ name: 'doctor_uuid' })
   doctor: Doctor;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

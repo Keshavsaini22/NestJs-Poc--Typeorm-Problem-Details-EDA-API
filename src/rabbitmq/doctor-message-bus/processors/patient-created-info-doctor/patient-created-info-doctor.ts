@@ -22,11 +22,6 @@ export class PatientCreatedInfoDoctorProcessor {
 
   async handleEvent(payload: Message<any>) {
     await this.dataSource.transaction(async (transaction) => {
-      console.log(
-        'payload in PatientCreatedInfoDoctorProcessor: ',
-        payload.body.data,
-      );
-
       await this.outboxMessageRepository.storeOutboxMessage(
         new GeneralTestEvent({ ...payload.body.data }),
         transaction,

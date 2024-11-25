@@ -8,6 +8,7 @@ import { RegisterUserModule } from './feature/user/register-user/register-user.m
 import { ListUsersModule } from './feature/user/list-users/list-users.module';
 import { DoctorModule } from './feature/doctor/doctor.module';
 import { PatientModule } from './feature/patient/patient.module';
+import { TestModule } from './feature/test/test.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PatientModule } from './feature/patient/patient.module';
     ListUsersModule,
     DoctorModule,
     PatientModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

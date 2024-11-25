@@ -17,6 +17,8 @@ import { InboxMessageHandler } from './inbox-message-handler.service';
 import { SignatureTypesTest } from './processor/signature-types.service';
 import { GeneralTestProcessor } from './processor/general-test/general-test';
 import { ConsumerService } from './rabbitmq/workers/consumer.service';
+import { TestService } from 'src/feature/test/test.service';
+import { TestRepository } from 'src/infrastructure/repositories/test/test.repository';
 
 @Module({
   imports: [
@@ -44,6 +46,8 @@ import { ConsumerService } from './rabbitmq/workers/consumer.service';
     SignatureTypesTest,
     GeneralTestProcessor,
     ConsumerService,
+    TestService,
+    TestRepository,
   ],
 })
 export class RabbitmqModule {}

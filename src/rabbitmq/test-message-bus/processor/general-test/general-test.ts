@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { Message } from '../common/message.interface';
 import { InboxMessageTestRepository } from 'src/infrastructure/repositories/inbox-message/inbox-message-test.repository';
 import { OutboxMessageTestRepository } from 'src/infrastructure/repositories/outbox-message/outbox-message-test.repository';
+import { TestService } from 'src/feature/test/test.service';
 
 export class GeneralTestProcessor {
   constructor(
@@ -13,6 +14,8 @@ export class GeneralTestProcessor {
     private dataSource: DataSource,
 
     private outboxMessageRepository: OutboxMessageTestRepository,
+
+    private testHandler: TestService,
   ) {}
 
   getHandlerName(): string {
@@ -21,7 +24,7 @@ export class GeneralTestProcessor {
 
   async handleEvent(payload: Message<any>) {
     await this.dataSource.transaction(async (transaction) => {
-      console.log('payload in GeneralTestProcessor: ', payload.body.data);
+      await this.testHandler.registerTest(payload.body.data, transaction);
 
       await this.inboxMessageRepository.storeInboxMessage(
         {
