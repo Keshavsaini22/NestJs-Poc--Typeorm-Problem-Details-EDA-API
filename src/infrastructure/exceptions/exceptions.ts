@@ -18,3 +18,9 @@ export class NotFound extends Error {
     super(message || 'Resource not found');
   }
 }
+
+export class BadRequest extends Error {
+  constructor(message) {
+    super(message || 'Resource not found');
+  }
+}

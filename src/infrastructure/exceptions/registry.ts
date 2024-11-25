@@ -1,5 +1,6 @@
 import { MapperRegistry } from 'http-problem-details-mapper';
 import {
+  BadRequestExceptionMapper,
   DtoValidationExceptionMapper,
   NotFoundExceptionMapper,
   UserEmailAlreadyExistsConflictMapper,
@@ -12,6 +13,7 @@ export class MapperRegistryFactory {
       .registerMapper(new UserEmailAlreadyExistsConflictMapper())
       .registerMapper(new DtoValidationExceptionMapper())
       .registerMapper(new ValidationPipeExceptionMapper())
-      .registerMapper(new NotFoundExceptionMapper());
+      .registerMapper(new NotFoundExceptionMapper())
+      .registerMapper(new BadRequestExceptionMapper());
   }
 }

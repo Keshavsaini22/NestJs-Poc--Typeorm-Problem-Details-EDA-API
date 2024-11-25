@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,
@@ -31,3 +32,5 @@ export class CreatePatientDto {
   @IsUUID()
   doctor_uuid: string;
 }
+
+export class UpdatePatientDto extends PartialType(CreatePatientDto) {}

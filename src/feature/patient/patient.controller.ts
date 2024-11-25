@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 import { PatientService } from './patient.service';
-import { CreatePatientDto } from './patient.dto';
+import { CreatePatientDto, UpdatePatientDto } from './patient.dto';
 
 @Controller('patients')
 export class PatientController {
@@ -9,5 +9,13 @@ export class PatientController {
   @Post('/')
   async registerPatient(@Body() body: CreatePatientDto) {
     return this.patientService.registerPatient(body);
+  }
+
+  @Put('/:uuid')
+  async updatePatient(
+    @Param('uuid') uuid: string,
+    @Body() body: UpdatePatientDto,
+  ) {
+    return this.patientService.updatePatient(uuid, body); 
   }
 }

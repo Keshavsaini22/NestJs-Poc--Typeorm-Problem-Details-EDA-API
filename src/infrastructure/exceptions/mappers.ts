@@ -5,7 +5,7 @@ import {
 } from 'http-problem-details';
 import { ErrorMapper } from 'http-problem-details-mapper';
 import { UserEmailAlreadyExistsConflict } from 'src/domain/user/exceptions/exceptions';
-import { DtoValidation, NotFound } from './exceptions';
+import { BadRequest, DtoValidation, NotFound } from './exceptions';
 
 class ConflictMapper {
   static mapError(error: Error): ProblemDocument {
@@ -45,6 +45,21 @@ export class NotFoundExceptionMapper extends ErrorMapper {
 
   mapError(error: Error): ProblemDocument {
     return NotFoundMapper.mapError(error);
+  }
+}
+
+//Bad Request
+export class BadRequestExceptionMapper extends ErrorMapper {
+  constructor() {
+    super(BadRequest);
+  }
+
+  mapError(error: Error): ProblemDocument {
+    return new ProblemDocument({
+      title: 'Bad Request',
+      detail: error.message,
+      status: HttpStatus.BAD_REQUEST,
+    });
   }
 }
 
