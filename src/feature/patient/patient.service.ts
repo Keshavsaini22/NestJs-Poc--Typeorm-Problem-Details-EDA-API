@@ -55,7 +55,6 @@ export class PatientService {
           })
           .getOne();
 
-        console.log('patient 1: ', patient);
         console.log('Transaction 1: Lock acquired');
         await new Promise((resolve) => setTimeout(resolve, 7000)); // Simulate processing delay
         console.log('Transaction 1: Completed');
@@ -74,12 +73,28 @@ export class PatientService {
           })
           .getOne();
 
-        console.log('patient2: ', patient);
         console.log('Transaction 2: Lock acquired');
       });
     };
 
+    const transaction3 = async () => {
+      await this.dataSource.transaction(async (transactionalEntityManager) => {
+        console.log('Transaction 3: Starting');
+        const patient = await transactionalEntityManager
+          .createQueryBuilder(Patient, 'patient')
+          .setLock('pessimistic_write')
+          .where('patient.uuid = :uuid', {
+            uuid: '5ed1967a-8bbb-46a8-8722-4a016bf56376',
+          })
+          .getOne();
+
+        console.log('Transaction 3: Lock acquired');
+        await new Promise((resolve) => setTimeout(resolve, 7000)); // Simulate processing delay
+        console.log('Transaction 3: Completed');
+      });
+    };
+
     // Run both transactions concurrently
-    await Promise.all([transaction1(), transaction2()]);
+    await Promise.all([transaction1(), transaction2(), transaction3()]);
   }
 }
