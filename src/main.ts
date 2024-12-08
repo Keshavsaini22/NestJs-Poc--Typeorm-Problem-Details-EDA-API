@@ -6,6 +6,7 @@ import { ValidationError } from 'class-validator';
 import { DtoValidation } from './infrastructure/exceptions/exceptions';
 import { AllExceptionsFilter } from './infrastructure/exceptions/all-expception-filter';
 import cookieParser from 'cookie-parser';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
   const port = configService.get<number>('APP_PORT');
   app.use(cookieParser());
   app.enableCors();
+  app.use('/uploads', express.static('uploads'))
 
   app.useGlobalPipes(
     new ValidationPipe({
