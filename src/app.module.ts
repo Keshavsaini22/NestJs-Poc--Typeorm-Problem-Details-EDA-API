@@ -9,6 +9,7 @@ import { ListUsersModule } from './feature/user/list-users/list-users.module';
 import { DoctorModule } from './feature/doctor/doctor.module';
 import { PatientModule } from './feature/patient/patient.module';
 import { TestModule } from './feature/test/test.module';
+import { LoginUserModule } from './feature/user/login-user/login-user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TestModule } from './feature/test/test.module';
     DoctorModule,
     PatientModule,
     TestModule,
+    LoginUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

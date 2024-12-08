@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from 'src/infrastructure/repositories/user/user.repository';
 import { RegisterUserCommand } from './register-user.command';
 import { UserEmailAlreadyExistsConflict } from 'src/domain/user/exceptions/exceptions';
+import * as bcrypt from 'bcrypt';
 
 @CommandHandler(RegisterUserCommand)
 export class RegisterUserHandler
@@ -18,6 +19,8 @@ export class RegisterUserHandler
 
     if (user) throw new UserEmailAlreadyExistsConflict();
 
-    return await this.repository.saveUser(command);
+    const hashedPassword = await bcrypt.hash(command.password, 10);
+
+    return await this.repository.saveUser({...command,password:hashedPassword});
   }
 }

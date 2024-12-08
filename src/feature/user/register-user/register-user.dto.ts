@@ -1,4 +1,3 @@
-// src/users/dto/register-user.dto.ts
 import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Roles } from 'src/domain/user/enums/roles.enum';
 
@@ -14,7 +13,11 @@ export class RegisterUserDto {
   @IsNotEmpty()
   address: string;
 
+  @IsNotEmpty()
+  password: string;
+
   @IsOptional()
   @IsEnum(Roles)
   role?: Roles;
 }
+

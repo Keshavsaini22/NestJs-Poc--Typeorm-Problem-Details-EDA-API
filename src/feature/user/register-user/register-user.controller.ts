@@ -9,9 +9,9 @@ export class RegisterUserController {
 
   @Post('/')
   async registerUser(@Body() registerUserDto: RegisterUserDto) {
-    const { name, email, address, role } = registerUserDto;
+    const { name, email, address, role,password } = await registerUserDto;
 
-    const command = new RegisterUserCommand(name, email, address, role);
+    const command = new RegisterUserCommand(name, email, address, role,password);
 
     return this.commandBus.execute(command);
   }

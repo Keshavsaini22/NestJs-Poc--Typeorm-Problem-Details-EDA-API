@@ -3,6 +3,7 @@ type UserPayload = {
   email: string;
   address: string;
   role: string;
+  password: string;
 };
 
 type UserResponseType = {

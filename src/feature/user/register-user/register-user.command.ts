@@ -4,5 +4,6 @@ export class RegisterUserCommand {
     public readonly email: string,
     public readonly address: string,
     public readonly role: string,
-  ) {}
+    public readonly password: string,
+  ) { }
 }

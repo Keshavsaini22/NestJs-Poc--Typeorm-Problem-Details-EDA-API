@@ -22,6 +22,13 @@ export class CreateUsers1731923627298 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
+            name: 'uuid',
+            type: 'uuid',
+            isUnique: true,
+            isNullable: false,
+            default: 'uuid_generate_v4()',
+          },
+          {
             name: 'name',
             type: 'varchar',
             length: '100',
@@ -32,6 +39,11 @@ export class CreateUsers1731923627298 implements MigrationInterface {
             type: 'varchar',
             length: '100',
             isUnique: true,
+            isNullable: false,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
             isNullable: false,
           },
           {
@@ -73,6 +85,9 @@ export class CreateUsers1731923627298 implements MigrationInterface {
         ON "users" ("email")
         WHERE "deleted_at" IS NULL
       `);
+
+    // Ensure the uuid-ossp extension is enabled for UUID generation
+    await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -83,5 +98,7 @@ export class CreateUsers1731923627298 implements MigrationInterface {
     await queryRunner.dropTable('users');
 
     await queryRunner.query(`DROP TYPE "roles_enum"`);
+
+    await queryRunner.query(`DROP EXTENSION IF EXISTS "uuid-ossp"`);
   }
 }
