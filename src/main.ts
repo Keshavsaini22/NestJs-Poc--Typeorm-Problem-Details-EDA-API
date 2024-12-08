@@ -5,12 +5,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 import { DtoValidation } from './infrastructure/exceptions/exceptions';
 import { AllExceptionsFilter } from './infrastructure/exceptions/all-expception-filter';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
   const port = configService.get<number>('APP_PORT');
+  app.use(cookieParser());
+  app.enableCors();
 
   app.useGlobalPipes(
     new ValidationPipe({

@@ -9,12 +9,19 @@ export class LoginUserController {
     constructor(private commandBus: CommandBus) { }
 
     @Post('/')
-    async registerUser(@Body() registerUserDto: LoginUserDto, @Res() res: Response,) {
-        const { email, password } = registerUserDto;
+    async loginUser(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
+        const { email, password } = loginUserDto;
 
         const command = new LoginUserCommand(email, password);
 
         const response = await this.commandBus.execute(command);
+
+        res.cookie('jwt', response.token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+        });
+
         return res.status(HttpStatus.OK).json(response);
     }
 }
